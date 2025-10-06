@@ -123,3 +123,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   paintQuestions();
 });
+
+
+
+// === SLIDER SIMPLE ===
+document.addEventListener("DOMContentLoaded", () => {
+  const track = document.querySelector(".slider-track");
+  const slides = document.querySelectorAll(".slider-track img");
+  const prevBtn = document.querySelector(".slider-btn.prev");
+  const nextBtn = document.querySelector(".slider-btn.next");
+  const dotsContainer = document.querySelector(".slider-dots");
+
+  if (!track || slides.length === 0) return;
+
+  let index = 0;
+
+  // Crear puntos
+  slides.forEach((_, i) => {
+    const dot = document.createElement("button");
+    if (i === 0) dot.classList.add("active");
+    dot.addEventListener("click", () => {
+      index = i;
+      updateSlider();
+    });
+    dotsContainer.appendChild(dot);
+  });
+  const dots = dotsContainer.querySelectorAll("button");
+
+  function updateSlider() {
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach(d => d.classList.remove("active"));
+    dots[index].classList.add("active");
+  }
+
+  prevBtn.addEventListener("click", () => {
+    index = (index - 1 + slides.length) % slides.length;
+    updateSlider();
+  });
+
+  nextBtn.addEventListener("click", () => {
+    index = (index + 1) % slides.length;
+    updateSlider();
+  });
+
+  // Auto-play cada 4 seg
+  setInterval(() => {
+    index = (index + 1) % slides.length;
+    updateSlider();
+  }, 4000);
+});
