@@ -1,14 +1,40 @@
-/* ===== Base original ===== */
+/* =========================
+   BASE
+========================= */
+:root {
+  --brand-dark: #382f2c;
+  --brand-green: #4a874b;
+  --bg: #f2f7f1;
+}
+
+* { box-sizing: border-box; }
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f2f7f1;
+  background-color: var(--bg);
   color: #333;
 }
+
+main { padding: 20px; }
+
+section {
+  background: #fff;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+h2 { color: var(--brand-green); }
+
+/* =========================
+   HEADER / NAV
+========================= */
 header {
-  background-color: #382f2c;
-  color: white;
+  background-color: var(--brand-dark);
+  color: #fff;
   padding: 15px 20px;
   display: flex;
   justify-content: space-between;
@@ -16,28 +42,24 @@ header {
   flex-wrap: wrap;
 }
 header img { height: 60px; }
+
 nav a {
-  color: white;
+  color: #fff;
   margin-left: 15px;
   text-decoration: none;
   font-weight: bold;
 }
 nav a:hover { text-decoration: underline; }
-main { padding: 20px; }
-section {
-  background: white;
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+/* Responsive header nav */
+@media (max-width: 860px) {
+  nav { width: 100%; margin-top: 8px; }
+  nav a { display: inline-block; margin: 6px 10px 0 0; }
 }
-h2 { color: #4a874b; }
-.slider img {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-  border-radius: 8px;
-}
+
+/* =========================
+   PRODUCTOS
+========================= */
 .productos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -47,13 +69,16 @@ h2 { color: #4a874b; }
   background: #e9f5e1;
   border-radius: 10px;
   padding: 10px;
-  box-sizing: border-box;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 .producto img { width: 100%; height: auto; border-radius: 6px; }
 
-form input, form textarea {
+/* =========================
+   FORMULARIOS
+========================= */
+form input,
+form textarea {
   width: 100%;
   padding: 10px;
   margin-bottom: 12px;
@@ -61,32 +86,27 @@ form input, form textarea {
   border-radius: 5px;
 }
 form button {
-  background-color: #382f2c;
-  color: white;
+  background-color: var(--brand-dark);
+  color: #fff;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
 }
-form button:hover { background-color: #4a874b; }
+form button:hover { background-color: var(--brand-green); }
 
-footer {
-  text-align: center;
-  background-color: #333;
-  color: white;
-  padding: 15px;
-  margin-top: 30px;
-  font-size: 0.9em;
-}
-
-/* ===== Mejoras ===== */
-
-/* Bullets verdes */
+/* =========================
+   LISTAS / UTILIDADES
+========================= */
 .bullets { padding-left: 18px; }
 .bullets li { margin: 6px 0; }
 
-/* FAQ */
+.is-hidden { display: none !important; }
+
+/* =========================
+   FAQ
+========================= */
 .faq-search { margin-bottom: 10px; }
 .faq-search input {
   width: 100%;
@@ -110,7 +130,9 @@ footer {
 .q-list { list-style: disc; padding-left: 20px; }
 .q-list li { margin: 6px 0; }
 
-/* Redes sociales */
+/* =========================
+   REDES
+========================= */
 .social-icons {
   display: flex;
   gap: 14px;
@@ -126,12 +148,14 @@ footer {
 }
 .social-icons a:hover { text-decoration: underline; }
 
-/* Chat */
+/* =========================
+   CHAT
+========================= */
 .chat-fab {
   position: fixed;
   right: 20px;
   bottom: 20px;
-  background: #382f2c;
+  background: var(--brand-dark);
   color: #fff;
   border: none;
   width: 54px;
@@ -200,11 +224,76 @@ footer {
   border-radius: 8px;
 }
 
-/* Responsive header nav */
-@media (max-width: 860px) {
-  nav { width: 100%; margin-top: 8px; }
-  nav a { display: inline-block; margin: 6px 10px 0 0; }
+/* =========================
+   FOOTER
+========================= */
+footer {
+  text-align: center;
+  background-color: #333;
+  color: #fff;
+  padding: 15px;
+  margin-top: 30px;
+  font-size: 0.9em;
 }
 
-/* fuerza ocultar/mostrar */
-.is-hidden { display: none !important; }
+/* =========================
+   SLIDER (refactor)
+   - Evita “upscale” (no pixelado)
+   - Ancho/alto controlados
+   - Un solo set de reglas
+========================= */
+#slider .slider {
+  width: min(900px, 95vw);
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 10px;
+  position: relative;
+}
+#slider .slider-track {
+  display: flex;
+  align-items: center;
+  height: clamp(260px, 45vw, 420px);
+  transition: transform .5s ease-in-out;
+}
+#slider .slider-track > img {
+  flex: 0 0 100%;
+  width: auto;        /* no forzar a 100% */
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  object-fit: contain; /* sin recortes ni deformación */
+  margin: 0 auto;
+}
+/* botones */
+#slider .slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,.5);
+  color: #fff;
+  border: 0;
+  font-size: 24px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+#slider .slider-btn.prev { left: 10px; }
+#slider .slider-btn.next { right: 10px; }
+#slider .slider-btn:hover { background: rgba(0,0,0,.7); }
+/* dots */
+#slider .slider-dots {
+  text-align: center;
+  margin-top: 8px;
+}
+#slider .slider-dots button {
+  border: 0;
+  width: 10px;
+  height: 10px;
+  margin: 4px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+}
+#slider .slider-dots button.active {
+  background: var(--brand-green);
+}
