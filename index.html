@@ -151,10 +151,27 @@
     </section>
 
     <section id="valoracion">
-      <h2>Valoración de Productos</h2>
-      <p>Producto Ecológico 1: ⭐⭐⭐⭐☆</p>
-      <p>Producto Ecológico 2: ⭐⭐⭐⭐⭐</p>
+      <h2>Valora esta página</h2>
+
+      <div class="rating"
+          data-key="page:home"
+          role="radiogroup"
+          aria-label="Valoración de esta página">
+        <button class="star" role="radio" aria-label="1 estrella" aria-checked="false" data-value="1">★</button>
+        <button class="star" role="radio" aria-label="2 estrellas" aria-checked="false" data-value="2">★</button>
+        <button class="star" role="radio" aria-label="3 estrellas" aria-checked="false" data-value="3">★</button>
+        <button class="star" role="radio" aria-label="4 estrellas" aria-checked="false" data-value="4">★</button>
+        <button class="star" role="radio" aria-label="5 estrellas" aria-checked="false" data-value="5">★</button>
+      </div>
+
+      <p class="rating-summary">
+        Tu calificación: <strong class="rating-my">—</strong> ·
+        Promedio local: <strong class="rating-avg">0.0</strong>/5 ·
+        Votos: <strong class="rating-count">0</strong>
+      </p>
     </section>
+
+
 
     <section id="contacto">
       <h2>Contáctame</h2>
