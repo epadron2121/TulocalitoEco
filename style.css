@@ -297,3 +297,36 @@ footer {
 #slider .slider-dots button.active {
   background: var(--brand-green);
 }
+
+
+/* === RATING (estrellas) === */
+.rating {
+  display: inline-flex;
+  gap: 6px;
+  font-size: 28px;          /* tamaño de estrella */
+  line-height: 1;
+  user-select: none;
+}
+.rating .star {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0 2px;
+  cursor: pointer;
+  opacity: .45;
+  transition: transform .12s ease, opacity .12s ease;
+}
+.rating .star[aria-checked="true"],
+.rating .star.active {
+  opacity: 1;
+}
+.rating .star:hover,
+.rating .star:focus-visible {
+  transform: scale(1.15);
+  outline: none;
+}
+.rating-summary {
+  margin-top: 6px;
+  color: #444;
+  font-size: .95rem;
+}
