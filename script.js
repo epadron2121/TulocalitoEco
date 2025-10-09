@@ -172,3 +172,83 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSlider();
   }, 4000);
 });
+
+
+/* ===== RATING (Stars) ===== */
+(function () {
+  const STORE_KEY = 'ratings_v1';
+
+  const load = () => JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+  const save = (obj) => localStorage.setItem(STORE_KEY, JSON.stringify(obj));
+
+  function setUI($rating, value) {
+    const stars = [...$rating.querySelectorAll('.star')];
+    stars.forEach(btn => {
+      const checked = Number(btn.dataset.value) <= value;
+      btn.setAttribute('aria-checked', checked ? 'true' : 'false');
+      btn.classList.toggle('active', checked);
+    });
+  }
+
+  function updateSummary($rating, my, data) {
+    const myEl = $rating.parentElement.querySelector('.rating-my');
+    const avgEl = $rating.parentElement.querySelector('.rating-avg');
+    const cntEl = $rating.parentElement.querySelector('.rating-count');
+
+    // En este demo “promedio local” = promedio de TODAS las calificaciones guardadas para esa clave
+    const key = $rating.dataset.key;
+    const arr = (data[key]?.all || []);
+    const sum = arr.reduce((a,b) => a+b, 0);
+    const avg = arr.length ? (sum / arr.length) : 0;
+
+    if (myEl)  myEl.textContent  = my ? `${my}★` : '—';
+    if (avgEl) avgEl.textContent = avg.toFixed(1);
+    if (cntEl) cntEl.textContent = arr.length;
+  }
+
+  function initRating($rating) {
+    const key = $rating.dataset.key;
+    if (!key) return;
+
+    const data = load();
+    const my = data[key]?.mine || 0;
+    setUI($rating, my);
+    updateSummary($rating, my, data);
+
+    $rating.addEventListener('click', (e) => {
+      const btn = e.target.closest('.star');
+      if (!btn) return;
+      const val = Number(btn.dataset.value || 0);
+      const store = load();
+
+      if (!store[key]) store[key] = { mine: 0, all: [] };
+      // si el usuario vuelve a hacer click en la misma, permitimos “cambiar” la suya
+      store[key].mine = val;
+
+      // guardamos histórico simple para el “promedio local”
+      store[key].all = Array.isArray(store[key].all) ? store[key].all : [];
+      store[key].all.push(val);
+
+      save(store);
+      setUI($rating, val);
+      updateSummary($rating, val, store);
+    });
+
+    // Accesible con teclado (← →)
+    $rating.addEventListener('keydown', (e) => {
+      const stars = [...$rating.querySelectorAll('.star')];
+      const current = Number((load()[key]?.mine) || 0);
+      let next = current;
+      if (e.key === 'ArrowRight') next = Math.min(5, current + 1);
+      if (e.key === 'ArrowLeft')  next = Math.max(1, current - 1);
+      if (next !== current) {
+        stars[next - 1]?.click();
+        e.preventDefault();
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.rating[data-key]').forEach(initRating);
+  });
+})();
