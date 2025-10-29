@@ -14,6 +14,7 @@
     <meta property="og:image" content="og-image.jpg" />
     <meta property="og:url" content="https://tu-dominio-o-ruta-local/" />
     <meta name="twitter:card" content="summary_large_image" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
   </head>
   <body>
     <header>
@@ -282,6 +283,30 @@
         </div>
       </section>
 
+      <section id="animacion">
+        <h2>Animación Ecológica</h2>
+        <p>Esta animación representa el crecimiento de nuestras ideas sostenibles y la naturaleza en equilibrio 🌿.</p>
+
+        <!-- Librería moderna para .lottie -->
+        <script
+          src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.5/dist/dotlottie-wc.js"
+          type="module"
+        ></script>
+
+        <!-- Animación local -->
+        <dotlottie-wc
+          src="./animacion.lottie"
+          style="width: 300px; height: 300px; display:block; margin:0 auto;"
+          autoplay
+          loop
+        ></dotlottie-wc>
+      </section>
+
+
+
+
+
+
       <section id="galeria">
         <h2>Galería de Imágenes</h2>
         <div class="galeria-grid">
@@ -366,7 +391,6 @@
     <footer>
       <p>&copy; 2025 Tu Localito Ecológico. Todos los derechos reservados.</p>
     </footer>
-
     <script src="script.js"></script>
   </body>
 </html>
