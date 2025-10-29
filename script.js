@@ -345,3 +345,16 @@ document.querySelectorAll(".producto button").forEach((btn, i) => {
 
 // Inicializar carrito
 renderCart();
+
+
+// === Animación ecológica con Lottie ===
+document.addEventListener("DOMContentLoaded", function() {
+  lottie.loadAnimation({
+    container: document.getElementById('animacion-container'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    // Esta URL es pública y estable (no genera error 403)
+    path: 'https://lottie.host/f8d4b64e-fc54-4bdf-8b4a-59e1185b4a63/FwGMi4lBi8.json'
+  });
+});
